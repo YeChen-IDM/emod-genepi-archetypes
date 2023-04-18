@@ -15,7 +15,7 @@ from run_sims.sweeps import set_habitat_scale, set_max_individual_infections, se
 
 def create_and_submit_experiment(exp_id_file: str = None):
     # ========================================================
-    experiment_name = "emod_MPG
+    experiment_name = "emod_MPG"
 
     # parameters to sweep over:
     max_individual_infections = [3,6,9]
