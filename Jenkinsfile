@@ -54,6 +54,7 @@ podTemplate(
 		}
 		stage('Run Sims') {
 			dir('run_sims') {
+				sh 'python3 get_latest_binary.py'
 				sh 'python3 run_sim.py'
 			}
 		}
