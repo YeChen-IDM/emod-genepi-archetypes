@@ -43,7 +43,9 @@ def create_and_submit_experiment():
     )
 
     # Add demographics, reporter, assets
-    task.create_demog_from_callback(build_demographics_from_file)
+    demographics_callback = partial(build_demographics_from_file, test_run=test_run)
+    task.create_demog_from_callback(demographics_callback)
+
     add_default_reports(task, test_run=test_run)
     task.common_assets.add_directory(assets_directory=manifest.assets_input_dir)
     task.set_sif(manifest.sif)

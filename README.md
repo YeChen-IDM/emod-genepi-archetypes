@@ -20,6 +20,6 @@ Right now, only runs sims with 10k individuals, no seasonality, no interventions
 - max_individual_infections: the maximum number of concurrent infections an individual in the simulation can have
 - larval_habitat_scale: the log10 of the maximum larval habitat (increasing this increases the transmission intensity)
 - number of seeds: number of simulation replicates
-- test_run: if set to True, the sims are 5-year sims with the reports beginning after 3 years, and sims are submitted to the node_group idm_48cores.  Otherwise, the sims are 40 years long, with reports starting after 30 years, and sims are submitted to node_group idm_abcd
+- test_run: if set to True, the sims have 1k individuals and are 5-year sims with the reports beginning after 3 years, and sims are submitted to the node_group idm_48cores.  Otherwise, the sims have 10k individuals and are 40 years long, with reports starting after 30 years, and sims are submitted to node_group idm_abcd
 
 3. Run run_sim.py

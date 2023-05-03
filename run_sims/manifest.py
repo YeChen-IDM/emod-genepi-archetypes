@@ -11,6 +11,7 @@ current_directory = ""
 ep4_path = os.path.join(base_folder, "Assets")
 burnin_directory = os.path.join(base_folder, "Assets")
 sif = os.path.join(base_folder, "Assets/sif.id")
+test_demographics_file_path = os.path.join(base_folder, "Assets/demo_for_testing.json")
 demographics_file_path = os.path.join(base_folder, "Assets/demo.json")
 
 # CSVs for intervention setup
