@@ -4,8 +4,8 @@ podTemplate(
     activeDeadlineSeconds : 3600,
     containers: [
         containerTemplate(
-            name: 'dtk-rpm-builder', 
-            image: 'docker-production.packages.idmod.org/idm/dtk-rpm-builder:0.1',
+            name: 'dtk-centos-buildenv', 
+            image: 'testteam-docker-stage.packages.idmod.org/buildtest/idm/dtk-centos-buildenv:4.0',
             command: 'sleep', 
             args: '30d'
             )
@@ -24,7 +24,7 @@ podTemplate(
                              type: 'PT_BRANCH')
         ])])
   node(POD_LABEL) {
-    container('dtk-rpm-builder'){
+    container('dtk-centos-buildenv'){
 		stage('Cleanup Workspace') {	    
 			cleanWs()
 			echo "Cleaned Up Workspace For Project"
