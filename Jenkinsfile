@@ -58,14 +58,9 @@ podTemplate(
 				sh 'python3 run_sim.py'
 			}
 		}
-		stage('Download Outputs') {
+		stage('Download Outputs and Write Mapping Files') {
 			dir('run_sims') {
-				sh 'python3 download_output_pycomps.py'
-			}
-		}
-		stage('Write Mapping Files') {
-			dir('run_sims') {
-				sh 'python3 write_mapping_file.py'
+				sh 'python3 post_simulation_steps.py'
 			}
 		}
  	}
