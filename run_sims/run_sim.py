@@ -1,3 +1,4 @@
+import argparse
 from functools import partial
 
 from emodpy.emod_task import EMODTask
@@ -12,9 +13,9 @@ from run_sims.reports import add_default_reports
 from run_sims.sweeps import set_habitat_scale, set_max_individual_infections, set_run_number
 
 
-def create_and_submit_experiment():
+def create_and_submit_experiment(exp_id_file: str = None):
     # ========================================================
-    experiment_name = "test"
+    experiment_name = "emod_MPG"
 
     # parameters to sweep over:
     max_individual_infections = [3,6,9]
@@ -23,9 +24,9 @@ def create_and_submit_experiment():
     test_run = True
 
     if test_run:
-        platform = Platform("Calculon", num_cores=1, node_group="idm_48cores", priority="AboveNormal")
+        platform = Platform(manifest.platform_name, num_cores=1, node_group="idm_48cores", priority="AboveNormal")
     else:
-        platform = Platform("Calculon", num_cores=1, node_group="idm_abcd", priority="Normal")
+        platform = Platform(manifest.platform_name, num_cores=1, node_group="idm_abcd", priority="Normal")
 
     # =========================================================
 
@@ -66,8 +67,18 @@ def create_and_submit_experiment():
         print(f"Experiment {experiment.uid} failed.\n")
         exit()
 
+    # Save experiment id to file
+    with open(exp_id_file, "w") as fd:
+        fd.write(experiment.uid.hex)
+    print(experiment.uid.hex)
+
     print(f"Experiment {experiment.uid} succeeded.")
+    return experiment.uid.hex
 
 
 if __name__ == "__main__":
-    create_and_submit_experiment()
+    parser = argparse.ArgumentParser(description='Emod experiment id file')
+    parser.add_argument('--exp_id_filepath', '-i', type=str, help='Emod experiment id file',
+                        default=manifest.exp_id_file)
+    args = parser.parse_args()
+    create_and_submit_experiment(args.exp_id_filepath)

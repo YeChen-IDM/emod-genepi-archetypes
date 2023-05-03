@@ -1,6 +1,6 @@
 import os
 
-base_folder = "C:/Users/joshsu/OneDrive - Bill & Melinda Gates Foundation/Code/emod-genepi-archetypes/run_sims/"
+base_folder = "/home/yechen/Github/emod-genepi-archetypes/run_sims/"
 
 # Ensure the following locations exist
 schema_file = os.path.join(base_folder, "download/schema.json")
@@ -16,3 +16,16 @@ demographics_file_path = os.path.join(base_folder, "Assets/demo.json")
 
 # CSVs for intervention setup
 additional_csv_folder = os.path.join(base_folder, "Assets/")
+output = "emod_output"
+if not os.path.isdir(output):
+    os.mkdir(output)
+exp_id_file = os.path.join(output, "emod_exp.id")
+download_wi_id_file = os.path.join(output, "download_wi.id")
+simulation_output_filepath = "emod_monthly_testing"
+infection_report = 'ReportInfectionStatsMalaria.csv'
+transmission_report = 'ReportSimpleMalariaTransmission.csv'
+
+# Comps
+compshost = 'https://comps.idmod.org'
+platform_name = "Calculon"
+download_num_threads = 8
