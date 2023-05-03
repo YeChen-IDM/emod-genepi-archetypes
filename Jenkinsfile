@@ -41,7 +41,7 @@ podTemplate(
 			echo "I execute on the ${env.BRANCH} branch"
 			git branch: "${env.BRANCH}",
 			credentialsId: '704061ca-54ca-4aec-b5ce-ddc7e9eab0f2',
-			url: 'git@github.com:YeChen-IDM/emod-genepi-archetypes.git'
+			url: 'git@github.com:jgsuresh/emod-genepi-archetypes.git'
 		}
 		stage('Install') {
 			sh 'pip3 install -e . -r requirements.txt'
