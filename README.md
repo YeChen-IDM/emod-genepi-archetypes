@@ -8,6 +8,8 @@ Right now, only runs sims with 10k individuals, no seasonality, no interventions
 ### Installation
 Run the following command: ( it will install this project in editable/'develop' mode):
 ```bash
+pip install --upgrade pip
+pip install setuptools (only if you don't have it)
 pip install -e . -r requirements.txt
 ```
 
