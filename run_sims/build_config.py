@@ -9,7 +9,7 @@ def set_full_config(config, test_run=False):
     set_project_config_params(config)
 
     if test_run:
-        config.parameters.Simulation_Duration = 5 * 365
+        config.parameters.Simulation_Duration = 2 * 365#5 * 365
     else:
         config.parameters.Simulation_Duration = 40 * 365
 

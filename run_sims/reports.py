@@ -5,7 +5,7 @@ from run_sims import manifest
 
 def add_default_reports(emod_task, reporting_interval=30, test_run=False):
     if test_run:
-        report_start_day = 3*365
+        report_start_day = 1*365 #3*365
     else:
         report_start_day = 30*365
 
