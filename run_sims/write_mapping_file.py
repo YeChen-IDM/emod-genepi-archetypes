@@ -19,7 +19,6 @@ def write_mapping_file(output_filepath: list, first_only: bool = False, mapping_
 
     sim_map = {}
     for f in output_filepath:
-        print(f)
         filename = os.path.basename(f)
         directory = os.path.abspath(os.path.dirname(f))
         sim = directory.split('sim_')[-1]
