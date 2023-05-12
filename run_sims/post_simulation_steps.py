@@ -5,6 +5,7 @@ from run_sims.write_mapping_file import write_mapping_file
 
 if __name__ == '__main__':
     output_filepath = download_output(manifest.exp_id_file, False, manifest.output)
+    print(f"Here are the downloaded files: {output_filepath}.")
     mapping_files = write_mapping_file(output_filepath)
-    print(mapping_files)
+    print(f"Here are the mapping file/files: {mapping_files}.")
     pass

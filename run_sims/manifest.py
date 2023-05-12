@@ -1,6 +1,6 @@
 import os
 
-base_folder = "/home/yechen/Github/emod-genepi-archetypes/run_sims/"
+base_folder = os.path.dirname(os.path.realpath(__file__))
 
 # Ensure the following locations exist
 schema_file = os.path.join(base_folder, "download/schema.json")
