@@ -1,5 +1,6 @@
 import argparse
 from functools import partial
+from typing import Optional
 
 from emodpy.emod_task import EMODTask
 from idmtools.builders import SimulationBuilder
@@ -13,15 +14,35 @@ from run_sims.reports import add_default_reports
 from run_sims.sweeps import set_habitat_scale, set_max_individual_infections, set_run_number
 
 
-def create_and_submit_experiment(exp_id_file: str = None):
-    # ========================================================
-    experiment_name = "emod_MPG"
+def create_and_submit_experiment(exp_id_file: str = manifest.exp_id_file, test_run: bool = True,
+                                 experiment_name: str = "Emod_genepi_archetypes",
+                                 max_individual_infections: Optional[float] = None,
+                                 larval_habitat_scales: Optional[int] = None,
+                                 number_of_seeds: int = 1, reporting_interval = 30):
+    """
+    Submit and run Emod experiment in Comps
+    Args:
+        exp_id_file:                   Filepath of experiment id.
+        test_run:                      If set to True, the sims have 1k individuals and are 3-year sims with the reports
+                                       beginning after 1 year, and sims are submitted to the node_group idm_48cores.
+                                       Otherwise, the sims have 10k individuals and are 40 years long, with reports
+                                       starting after 30 years, and sims are submitted to node_group idm_abcd.
+        experiment_name:               Name of experiment in Comps.
+        max_individual_infections:     The maximum number of concurrent infections an individual in the simulation can have.
+        larval_habitat_scales:         The log10 of the maximum larval habitat (increasing this increases the
+                                       transmission intensity).
+        number_of_seeds:               Number of simulation replicates.
+        reporting_interval:            Reporting interval for ReportInfectionStatsMalaria.
 
+    Returns: Comps id for experiment
+
+    """
     # parameters to sweep over:
-    max_individual_infections = [3,6,9]
-    larval_habitat_scales = [6.5,7.0,7.5]
-    number_of_seeds = 1
-    test_run = True
+    if larval_habitat_scales is None:
+        larval_habitat_scales = [6.5, 7.0, 7.5]
+
+    if max_individual_infections is None:
+        max_individual_infections = [3, 6, 9]
 
     if test_run:
         platform = Platform(manifest.platform_name, num_cores=1, node_group="idm_48cores", priority="AboveNormal")
@@ -47,7 +68,7 @@ def create_and_submit_experiment(exp_id_file: str = None):
     demographics_callback = partial(build_demographics_from_file, test_run=test_run)
     task.create_demog_from_callback(demographics_callback)
 
-    add_default_reports(task, test_run=test_run)
+    add_default_reports(task, test_run=test_run, reporting_interval=reporting_interval)
     task.common_assets.add_directory(assets_directory=manifest.assets_input_dir)
     task.set_sif(manifest.sif)
 
@@ -78,7 +99,24 @@ def create_and_submit_experiment(exp_id_file: str = None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Emod experiment id file')
-    parser.add_argument('--exp_id_filepath', '-i', type=str, help='Emod experiment id file',
+    parser.add_argument('--exp_id_filepath', '-i', type=str, help='emod experiment id file',
                         default=manifest.exp_id_file)
+    parser.add_argument('--test_run', '-t', help='test_run flag, default to True', action='store_false')
+    parser.add_argument('--exp_name', '-e', type=str, help='emod experiment name in Comps',
+                        default='emod_genepi_archetypes')
+    parser.add_argument('--max_individual_infections', '-m', nargs='+', type=int,
+                        help='list of values for maximum number of concurrent infections to sweep',
+                        default=[3, 6, 9])
+    parser.add_argument('--larval_habitat_scales', '-l', nargs='+', type=float,
+                        help='list of values for the log10 of the maximum larval habitat to sweep',
+                        default=[6.5, 7.0, 7.5])
+    parser.add_argument('--seeds', '-s', type=int, help='number of simulation replicates',
+                        default=1)
+    parser.add_argument('--reporting_interval', '-r', type=int,
+                        help='reporting interval for ReportInfectionStatsMalaria', default=30)
     args = parser.parse_args()
-    create_and_submit_experiment(args.exp_id_filepath)
+    create_and_submit_experiment(exp_id_file=args.exp_id_filepath, test_run=args.test_run,
+                                 experiment_name=args.exp_name,
+                                 max_individual_infections=args.max_individual_infections,
+                                 larval_habitat_scales=args.larval_habitat_scales,
+                                 number_of_seeds=args.seeds, reporting_interval=args.reporting_interval)
