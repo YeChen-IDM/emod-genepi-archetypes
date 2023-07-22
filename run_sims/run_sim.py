@@ -14,12 +14,17 @@ from run_sims.reports import add_default_reports
 from run_sims.sweeps import set_habitat_scale, set_max_individual_infections, set_run_number
 
 
-def create_and_submit_experiment(exp_id_file: str = manifest.exp_id_file, test_run: bool = True,
-                                 experiment_name: str = "Emod_genepi_archetypes",
+def create_and_submit_experiment(exp_id_file: str = manifest.exp_id_file,
+                                 archetype: Optional[str] = "flat", #flat, maka, magude
+                                 prevalence: Optional[float] = -1,
+                                 importation_seasonality: Optional[bool] = False,
+                                 importations_per_thousand_per_year: Optional[int] = 0,
+                                 population_size: Optional[int] = 10000, #1k, 10k, 100k??
                                  max_individual_infections: Optional[float] = None,
-                                 larval_habitat_scales: Optional[int] = None,
-                                 number_of_seeds: int = 1, reporting_interval = 30):
-    """
+                                 test_run: bool = True,
+                                 experiment_name: str = "Emod_genepi_archetypes",
+                                 reporting_interval = 30):
+    """fixme Update docstring
     Submit and run Emod experiment in Comps
     Args:
         exp_id_file:                   Filepath of experiment id.
@@ -37,12 +42,6 @@ def create_and_submit_experiment(exp_id_file: str = manifest.exp_id_file, test_r
     Returns: Comps id for experiment
 
     """
-    # parameters to sweep over:
-    if larval_habitat_scales is None:
-        larval_habitat_scales = [6.5, 7.0, 7.5]
-
-    if max_individual_infections is None:
-        max_individual_infections = [3, 6, 9]
 
     if test_run:
         platform = Platform(manifest.platform_name, num_cores=1, node_group="idm_48cores", priority="AboveNormal")
@@ -51,7 +50,11 @@ def create_and_submit_experiment(exp_id_file: str = manifest.exp_id_file, test_r
 
     # =========================================================
 
-    build_config = partial(set_full_config, test_run=test_run)
+    build_config = partial(set_full_config,
+                           test_run=test_run,
+                           archetype=archetype,
+                           prevalence=prevalence,
+                           population_size=population_size)
 
     print("Creating EMODTask (from files)...")
     task = EMODTask.from_default2(
