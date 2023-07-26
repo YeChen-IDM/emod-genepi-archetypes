@@ -4,19 +4,15 @@ from emodpy_malaria.malaria_config import add_species, get_species_params, set_s
 from run_sims import manifest
 
 
-def set_full_config(config,
-                    test_run=False,
+def set_full_config(config
                     ):
     set_core_config_params(config)
     set_project_config_params(config)
 
-    if test_run:
-        config.parameters.Simulation_Duration = 3 * 365
-    else:
-        config.parameters.Simulation_Duration = 40 * 365
-        config.parameters["logLevel_default"] = "WARNING"
-        config.parameters["logLevel_JsonConfigurable"] = "WARNING" # Note: this makes it hard to debug
-        config.parameters["Enable_Log_Throttling"] = 1
+
+    config.parameters["logLevel_default"] = "WARNING"
+    config.parameters["logLevel_JsonConfigurable"] = "WARNING" # Note: this makes it hard to debug
+    config.parameters["Enable_Log_Throttling"] = 1
 
     config.parameters.Memory_Usage_Halting_Threshold_Working_Set_MB = 16000
     config.parameters.Memory_Usage_Warning_Threshold_Working_Set_MB = 15000
@@ -48,15 +44,15 @@ def set_project_config_params(config):
     config.parameters.Base_Land_Temperature = 27
 
 def set_non_ento_archetype_config_params(config, archetype):
-    if archetype == "flat":
-        from run_sims.archetypes.flat import archetype_config
-        archetype_config(config)
-    elif archetype == "maka":
-        from run_sims.archetypes.maka import archetype_config
-        archetype_config(config)
-    elif archetype == "magude":
-        from run_sims.archetypes.magude import archetype_config
-        archetype_config(config)
+    if archetype == "test":
+        config.parameters.Simulation_Duration = 3 * 365
+    if archetype in ["flat", "maka_like", "magude_like"]:
+        config.parameters.Simulation_Duration = 40 * 365
+    elif archetype == "maka_historical":
+        config.parameters.Simulation_Duration = 60 * 365
+    elif archetype == "magude_historical":
+        raise NotImplementedError
+        # config.parameters.Simulation_Duration = 40 * 365
     else:
         return NotImplementedError("Archetype {} not implemented".format(archetype))
 
@@ -73,7 +69,7 @@ def set_ento(config, archetype="flat", habitat_scale=-1):
         set_ento_params(config, anthropophily=0.65, indoor_feeding_fraction=1.0)
         set_ento_habitat(config, archetype=archetype, habitat_scale=habitat_scale)
 
-    elif archetype == "maka":
+    elif archetype == "maka_historical" or archetype == "maka_like":
         if habitat_scale == -1:
             print("Using default maka habitat_scale (~8.75)")
             habitat_scale = 8.75
@@ -81,7 +77,7 @@ def set_ento(config, archetype="flat", habitat_scale=-1):
         set_ento_params(config, anthropophily=0.5, indoor_feeding_fraction=0.5)
         set_ento_habitat(config, archetype=archetype, habitat_scale=habitat_scale)
 
-    elif archetype == "magude":
+    elif archetype == "magude_historical" or archetype == "magude_like":
         if habitat_scale == -1:
             print("Using default magude habitat_scales (~7.93 for both species)")
             habitat_scale = 7.93
@@ -120,7 +116,7 @@ def set_ento_habitat(config, archetype, habitat_scale, species="gambiae"):
         lhm.parameters.Capacity_Distribution_Over_Time.Values = [1.0] * 12
         get_species_params(config, species).Habitats.append(lhm.parameters)
 
-    elif archetype == "maka":
+    elif archetype == "maka_like" or archetype == "maka_historical":
         # Makacoulibantang seasonality
         lhm.parameters.Capacity_Distribution_Number_Of_Years = 1
         lhm.parameters.Capacity_Distribution_Over_Time.Times = month_start_times
@@ -128,7 +124,7 @@ def set_ento_habitat(config, archetype, habitat_scale, species="gambiae"):
                                                                  0.133, 0.05]
         get_species_params(config, species).Habitats.append(lhm.parameters)
 
-    elif archetype == "magude":
+    elif archetype == "magude_like" or archetype == "magude_historical":
         # Magude-Sede seasonality
         lhm.parameters.Capacity_Distribution_Number_Of_Years = 5
         lhm.parameters.Capacity_Distribution_Over_Time.Times = [month_start_time + year_offset * 365 for year_offset in range(5) for month_start_time in month_start_times]

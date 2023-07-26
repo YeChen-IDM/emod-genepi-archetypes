@@ -8,6 +8,7 @@ from idmtools.entities.experiment import Experiment
 from run_sims import manifest
 from run_sims.build_config import set_full_config
 from run_sims.other import include_post_processing
+from run_sims.reports import add_default_reports
 from run_sims.sweeps import set_archetype, set_log10_x_larval_habitat, set_population_size_in_thousands, set_run_number
 
 
@@ -19,14 +20,18 @@ def create_and_submit_experiment():
     experiment_name = "e2e habitat sweep"
 
     # parameters to sweep over:
-    archetypes=["flat","maka","magude"]
-    pop_sizes = [100]
-    log10_x_larval_habitats = [round(x * 0.1, 1) for x in range(-15, 16)]
+    # archetypes=["flat","maka","magude"]
+    archetypes=["magude", "maka"]
+    pop_sizes = [1]
+    # log10_x_larval_habitats = [round(x * 0.1, 1) for x in range(-26, 15)]
+    log10_x_larval_habitats = [round(x * 0.1, 1) for x in range(0, 18)]
+    # log10_x_larval_habitats = [round(x * 0.1, 1) for x in range(-15, 16)]
+    # log10_x_larval_habitats = [round(x * 0.1, 1) for x in range(18, 26)]
     # larval_habitat_scales = [7.0,7.1,7.2,7.3,7.4,7.5,7.6,7.7,7.8,7.9,
     #                          8.0,8.1,8.2,8.3,8.4,8.5,8.6,8.7,8.8,8.9,
     #                          9.0,9.1,9.2,9.3,9.4,9.5,9.6,9.7,9.8,9.9,
     #                          10.0,10.1,10.2,10.3,10.4,10.5,10.6,10.7]
-    number_of_seeds = 2
+    number_of_seeds = 4
 
     platform = Platform("Calculon", num_cores=1, node_group="idm_abcd", priority="Normal")
     # platform = Platform("Calculon", num_cores=1, node_group="idm_cd", priority="BelowNormal")
@@ -50,6 +55,8 @@ def create_and_submit_experiment():
     print("Adding asset dir...")
     task.common_assets.add_directory(assets_directory=manifest.assets_input_dir)
     task.set_sif(manifest.sif)
+
+    add_default_reports(task)
 
     # Create simulation sweep with builder
     builder = SimulationBuilder()
