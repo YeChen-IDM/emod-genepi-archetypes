@@ -27,6 +27,7 @@ transmission_report = 'ReportSimpleMalariaTransmission.csv'
 
 # archetypes
 maka_archetype_folder = os.path.join(base_folder, "archetypes/maka")
+magude_archetype_folder = os.path.join(base_folder, "archetypes/magude")
 
 # Comps
 compshost = 'https://comps.idmod.org'

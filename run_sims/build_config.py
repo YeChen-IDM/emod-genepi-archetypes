@@ -48,11 +48,8 @@ def set_non_ento_archetype_config_params(config, archetype):
         config.parameters.Simulation_Duration = 3 * 365
     if archetype in ["flat", "maka_like", "magude_like"]:
         config.parameters.Simulation_Duration = 40 * 365
-    elif archetype == "maka_historical":
+    elif archetype == "maka_historical" or archetype == "magude_historical":
         config.parameters.Simulation_Duration = 60 * 365
-    elif archetype == "magude_historical":
-        raise NotImplementedError
-        # config.parameters.Simulation_Duration = 40 * 365
     else:
         return NotImplementedError("Archetype {} not implemented".format(archetype))
 

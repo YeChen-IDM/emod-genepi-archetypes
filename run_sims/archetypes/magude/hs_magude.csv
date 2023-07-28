@@ -1,0 +1,9 @@
+fulldate,cov_newclin_youth,cov_newclin_adult,cov_severe_youth,cov_severe_adult,duration,notes
+2000-01-01,0.06,0.03,0.87,0.8,1460,assumed historical scale-up
+2004-01-01,0.10,0.050,0.87,0.8,365,assumed historical scale-up
+2005-01-01,0.17,0.085,0.87,0.8,365,assumed historical scale-up
+2006-01-01,0.26,0.13,0.87,0.8,365,assumed historical scale-up
+2007-01-01,0.34,0.17,0.87,0.8,365,assumed historical scale-up
+2008-01-01,0.41,0.205,0.87,0.8,365,assumed historical scale-up
+2009-01-01,0.47,0.235,0.87,0.8,365,assumed historical scale-up
+2010-01-01,0.85,0.57,0.87,0.8,-1,population-weighted survey data

@@ -11,7 +11,8 @@ from run_sims import manifest
 from run_sims.build_config import set_full_config
 from run_sims.other import build_demographics_from_file, include_post_processing
 from run_sims.reports import add_default_reports
-from run_sims.sweeps import set_habitat_scale, set_max_individual_infections, set_run_number
+from run_sims.sweeps import set_habitat_scale
+from run_sims.sweeps.other_sweeps import set_max_individual_infections, set_run_number
 
 
 def create_and_submit_experiment(exp_id_file: str = manifest.exp_id_file,

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from emodpy import emod_task
 
 from run_sims import manifest
@@ -14,3 +16,11 @@ def build_demographics_from_file(test_run=False):
 def include_post_processing(task):
     task = emod_task.add_ep4_from_path(task, manifest.ep4_path)
     return task
+
+
+def convert_to_day_365(convert_date, ref_date, date_format="%Y-%m-%d"):
+    # Converts date to day of simulation starting from reference date
+    # Assumes a calendar year has exactly 365 days
+    return 365 * (datetime.strptime(convert_date, date_format).year - \
+                  datetime.strptime(ref_date, date_format).year) + \
+           datetime.strptime(convert_date, date_format).timetuple().tm_yday

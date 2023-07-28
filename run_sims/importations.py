@@ -28,23 +28,25 @@ def import_infections_through_outbreak(campaign,
     return {'number_imported_per_outbreak': num_infections,
             'days_between_importations': days_between_outbreaks}
 
-
-def constant_annual_importation(campaign, total_importations_per_year):
-
-    if total_importations_per_year <= 365:
-        days_between_importations = int(np.round(365/total_importations_per_year))
+def get_actual_number_imports_from_target_number(total_importations_per_year_target):
+    if total_importations_per_year_target <= 365:
+        days_between_importations = int(np.round(365 / total_importations_per_year_target))
         num_infections = 1
     else:
         days_between_importations = 1
-        num_infections = int(np.round(total_importations_per_year/365))
+        num_infections = int(np.round(total_importations_per_year_target / 365))
 
+    total_importations_per_year_actual = num_infections * int(365 / days_between_importations)
+
+    return days_between_importations, num_infections, total_importations_per_year_actual
+
+def constant_annual_importation(campaign, total_importations_per_year_target):
+    days_between_importations, num_infections, total_importations_per_year_actual = get_actual_number_imports_from_target_number(total_importations_per_year_target)
 
     import_infections_through_outbreak(campaign,
                                        days_between_outbreaks=days_between_importations,
                                        start_day=1,
                                        num_infections=num_infections)
-
-    return campaign
 
 
 def build_standard_campaign_object():
@@ -55,5 +57,5 @@ def build_standard_campaign_object():
 def build_importation_only_campaign(num_importations_per_year):
     # Only importations, no other interventions
     campaign = build_standard_campaign_object()
-    constant_annual_importation(campaign, total_importations_per_year=num_importations_per_year)
+    constant_annual_importation(campaign, total_importations_per_year_target=num_importations_per_year)
     return campaign

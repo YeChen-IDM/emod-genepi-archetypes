@@ -9,7 +9,8 @@ from run_sims import manifest
 from run_sims.build_config import set_full_config
 from run_sims.other import include_post_processing
 from run_sims.reports import add_default_reports
-from run_sims.sweeps import set_archetype, set_log10_x_larval_habitat, set_population_size_in_thousands, set_run_number
+from run_sims.sweeps import set_archetype, set_log10_x_larval_habitat, set_population_size_in_thousands
+from run_sims.sweeps.other_sweeps import set_run_number
 
 
 # Sweep over larval habitat to reach target prevalence for each of the sites

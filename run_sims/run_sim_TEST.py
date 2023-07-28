@@ -12,16 +12,11 @@ from run_sims.importations import build_importation_only_campaign
 from run_sims.other import include_post_processing
 from run_sims.reports import add_default_reports
 from run_sims.sweeps import set_archetype, \
-    set_log10_x_larval_habitat, set_max_individual_infections, set_population_size_in_thousands, set_run_number, \
-    set_sim_tag, set_target_prevalence
+    set_log10_x_larval_habitat, set_population_size_in_thousands, set_target_prevalence
+from run_sims.sweeps.other_sweeps import set_max_individual_infections, set_run_number, set_sim_tag
 
 # possible archetypes: test, flat, maka_like, magude_like, maka_historical, magude_historical
 
-
-# max num inf
-
-#fixme E2E model currently set up to only analyze 1 EMOD run. If we want to use full power of EMOD sweeps, we need to change this.
-# todo add ability to run in FPG mode
 
 # test_archetypes = ["test"]
 toy_archetypes = ["test", "flat", "maka_like", "magude_like"]

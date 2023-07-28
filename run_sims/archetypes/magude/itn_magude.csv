@@ -1,0 +1,9 @@
+fulldate,cov_all,net_type_flag,initial_killing,initial_blocking,birthnet_listening_duration,note
+2002-01-01,0.06,0,0.7,0.6,1095,assumed historical scale-up
+2005-01-01,0.1,0,0.7,0.6,1095,assumed historical scale-up
+2008-01-01,0.25,0,0.7,0.6,1095,assumed historical scale-up
+2011-01-01,0.33,0,0.7,0.6,1127,assumed historical scale-up
+2014-02-01,0.4,1,0.7,0.6,454
+2015-05-01,0.5,2,0.39,0.48,123,additional campaign events to more closely match observed net usage
+2015-09-01,0.71,2,0.34,0.45,822,additional campaign events to more closely match observed net usage
+2017-12-01,0.75,2,0.7,0.6,-1
