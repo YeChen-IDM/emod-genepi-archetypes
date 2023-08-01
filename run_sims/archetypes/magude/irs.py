@@ -4,7 +4,7 @@ import pandas as pd
 from emodpy_malaria.interventions.irs import add_scheduled_irs_housing_modification
 
 from run_sims import manifest
-from run_sims.other import convert_to_day_365
+from run_sims.helpers import convert_to_day_365
 
 
 def add_irs(campaign, sim_start_date):

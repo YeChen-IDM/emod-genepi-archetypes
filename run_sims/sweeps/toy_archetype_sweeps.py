@@ -36,6 +36,9 @@ def master_sweep_over_toy_scenarios(simulation, value):
                                num_importations_per_year=importations_per_year_per_thousand * population_size_in_thousands)
     simulation.task.create_campaign_from_callback(campaign_builder)
 
+    # Non-schema config parameter, so we can find it with dtk_post_process
+    simulation.task.config["archetype"] = archetype
+
     return {"archetype": archetype,
             "target_rdt_prevalence": target_rdt_prevalence,
             "population_size_in_thousands": population_size_in_thousands,

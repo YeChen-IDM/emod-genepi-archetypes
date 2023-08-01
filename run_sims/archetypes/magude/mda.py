@@ -4,7 +4,7 @@ import pandas as pd
 from emodpy_malaria.interventions.drug_campaign import add_drug_campaign
 
 from run_sims import manifest
-from run_sims.other import convert_to_day_365
+from run_sims.helpers import convert_to_day_365
 
 
 def add_mda(campaign, sim_start_date):

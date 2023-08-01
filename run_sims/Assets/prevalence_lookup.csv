@@ -1,0 +1,16 @@
+archetype,target_rdt_prevalence,log10_x_larval_habitat
+flat,0.05,-0.7
+flat,0.10,-0.3
+flat,0.20,0.3
+flat,0.30,0.9
+flat,0.40,1.85
+maka_like,0.05,-1.4
+maka_like,0.10,-1.05
+maka_like,0.20,-0.45
+maka_like,0.30,0.2
+maka_like,0.40,1.2
+magude_like,0.05,-1.0
+magude_like,0.10,-0.6
+magude_like,0.20,0.05
+magude_like,0.30,0.7
+magude_like,0.40,1.5

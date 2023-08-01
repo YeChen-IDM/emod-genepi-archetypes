@@ -1,6 +1,6 @@
 from run_sims import manifest
-from run_sims.download_output_pycomps import download_output
-from run_sims.write_mapping_file import write_mapping_file
+from workflow.download_output_pycomps import download_output
+from workflow.write_mapping_file import write_mapping_file
 
 
 if __name__ == '__main__':

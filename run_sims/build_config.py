@@ -53,6 +53,10 @@ def set_non_ento_archetype_config_params(config, archetype):
     else:
         return NotImplementedError("Archetype {} not implemented".format(archetype))
 
+    if archetype == "maka_historical":
+        # Create binned report for comparison to data
+        config.parameters.Enable_Demographics_Reporting = 1
+
 
 def set_ento(config, archetype="flat", habitat_scale=-1):
     if habitat_scale == -1:
@@ -76,8 +80,8 @@ def set_ento(config, archetype="flat", habitat_scale=-1):
 
     elif archetype == "magude_historical" or archetype == "magude_like":
         if habitat_scale == -1:
-            print("Using default magude habitat_scales (~7.93 for both species)")
-            habitat_scale = 7.93
+            print("Using default magude habitat_scales (~6.93 for both species)")
+            habitat_scale = 6.93
 
         add_species(config, manifest, ["arabiensis", "funestus"])
 

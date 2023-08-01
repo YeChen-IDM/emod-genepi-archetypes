@@ -44,6 +44,17 @@ def master_sweep_over_historical_scenarios(simulation, value):
     campaign_builder = partial(_campaign_builder, archetype=archetype)
     simulation.task.create_campaign_from_callback(campaign_builder)
 
+    # =======
+    # OTHER =
+    # =======
+
+    # Non-schema config parameter, so we can find it with dtk_post_process
+    simulation.task.config["archetype"] = archetype
+    simulation.task.config["population_size_in_thousands"] = population_size_in_thousands
+    simulation.task.config["importations_per_year_per_thousand"] = importations_per_year_per_thousand
+    # simulation.task.config["actual_num_importations_per_year_per_thousand"] = get_actual_number_imports_from_target_number(
+    #     importations_per_year_per_thousand * population_size_in_thousands)[2]
+
     return {"archetype": archetype,
             "population_size_in_thousands": population_size_in_thousands,
             "importations_per_year_per_thousand": importations_per_year_per_thousand,

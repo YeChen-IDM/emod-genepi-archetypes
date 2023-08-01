@@ -6,7 +6,7 @@ from idmtools.core.platform_factory import Platform
 from idmtools.entities.experiment import Experiment
 
 from run_sims.sweeps.historical_archetype_sweeps import master_sweep_over_historical_scenarios
-from run_sims.sweeps.other_sweeps import set_log10_x_larval_habitat, set_max_individual_infections, set_run_number
+from run_sims.sweeps.other_sweeps import set_max_individual_infections, set_run_number
 
 from run_sims import manifest
 from run_sims.build_config import set_full_config
@@ -93,7 +93,6 @@ def create_and_run_sim_sweep(archetypes=["flat"],
     else:
         sweep_values = list(itertools.product(archetypes, target_prevalences, pop_sizes_in_thousands, importations_per_year_per_1000))
         builder.add_sweep_definition(master_sweep_over_toy_scenarios, sweep_values)
-    # builder.add_sweep_definition(set_log10_x_larval_habitat, [round(x * 0.1, 1) for x in range(-12, -9)]) # TESTING ONLY
 
     if experiment_name is None:
         print("No experiment name provided. Using default name: mpg e2e test")
@@ -119,8 +118,8 @@ if __name__ == "__main__":
     #                          number_of_seeds=1,
     #                          experiment_name="mpg e2e test")
     create_and_run_sim_sweep(archetypes=["magude_historical"],
-                             pop_sizes_in_thousands=[1,10,50],
-                             importations_per_year_per_1000=[50],
+                             pop_sizes_in_thousands=[1,10],
+                             importations_per_year_per_1000=[200, 400],
                              max_num_infections=3,
-                             number_of_seeds=5,
+                             number_of_seeds=1,
                              experiment_name="mpg e2e test")

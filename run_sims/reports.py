@@ -15,6 +15,6 @@ def add_default_reports(emod_task, include_debugging_reports=False):
                                       start_day=report_start_day, max_age_years=1000)
     add_report_infection_stats_malaria(emod_task, manifest=manifest,
                                        start_day=report_start_day, reporting_interval=30)
-    if include_debugging_reports:
-        add_report_event_counter(emod_task, manifest=manifest,
-                                 start_day=report_start_day, event_trigger_list=["InfectionDropped"])
+    # if include_debugging_reports:
+    add_report_event_counter(emod_task, manifest=manifest,
+                             start_day=report_start_day, event_trigger_list=["InfectionDropped","Received_Treatment"])

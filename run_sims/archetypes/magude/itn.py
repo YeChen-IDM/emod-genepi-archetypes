@@ -5,7 +5,7 @@ import pandas as pd
 
 from run_sims import manifest
 from run_sims.archetypes.maka.maka_campaign import add_bednets_for_population_and_births
-from run_sims.other import convert_to_day_365
+from run_sims.helpers import convert_to_day_365
 
 month_times = [
     0.0,
