@@ -80,8 +80,8 @@ def set_ento(config, archetype="flat", habitat_scale=-1):
 
     elif archetype == "magude_historical" or archetype == "magude_like":
         if habitat_scale == -1:
-            print("Using default magude habitat_scales (~6.93 for both species)")
-            habitat_scale = 6.93
+            print("Using default magude habitat_scales (~7.03 for both species)")
+            habitat_scale = 7.03
 
         add_species(config, manifest, ["arabiensis", "funestus"])
 

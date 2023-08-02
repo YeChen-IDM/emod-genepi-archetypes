@@ -43,8 +43,3 @@ them at run time for run_sims/run_sim.py
     4.1. download_output_pycomps.py: This script will download 2 Emod report files('ReportInfectionStatsMalaria.csv' and 'ReportSimpleMalariaTransmission.csv') from each simulation to your local machine. It returns the experiment ids with the filepaths of the downloaded files. 
 
     4.2. write_mapping_file.py: This script will generate mapping files for each simulation results and save it in the same folder with the report files. It returns a list of filepaths for mapping files.
-
----
-### Potential future work/features
-- Have dtk_post_process make data-comparison plots for the historical archetypes (need help knowing how to find archetype with dtk_post_process)
-- 
