@@ -9,7 +9,7 @@
 - For flat/maka_like/magude_like scenarios, can set a target (RDT) prevalence (5%, 10%, 20%, 30%, 40%). User does not need to worry about larval habitats.
 - Set population size (1k,10k,20k,50k,100k)
 - Set importation rate per 1000 people in population. These infections are added randomly throughout population at close-to-specified rate 
-- Set max_individual_infections. 
+- Set max_individual_infections. (any integer)
 - Realistic biting heterogeneity included
 - If running maka_historical or magude_historical, the data comparison plots are automatically generated on COMPS for quick sanity checking.
 

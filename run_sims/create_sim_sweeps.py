@@ -21,10 +21,10 @@ from run_sims.sweeps.toy_archetype_sweeps import master_sweep_over_toy_scenarios
 toy_archetypes = ["test", "flat", "maka_like", "magude_like"]
 historical_archetypes = ["maka_historical", "magude_historical"]
 def create_and_run_sim_sweep(archetypes=["flat"],
-                             pop_sizes_in_thousands=[10],
-                             importations_per_year_per_1000=[0],
-                             target_prevalences=None,
-                             max_num_infections=[3],
+                             pop_sizes_in_thousands=[10], #1,10,20,50,100
+                             importations_per_year_per_1000=[0], # any integer
+                             target_prevalences=None, # 0.05,0.1,0.2,0.3,0.4
+                             max_num_infections=[3], # any integer
                              number_of_seeds=1,
                              comps_node_group="idm_abcd",
                              comps_run_priority="Normal",
