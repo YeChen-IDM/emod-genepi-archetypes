@@ -54,7 +54,8 @@ def download_output(exp_id_filepath: str, first_only: bool = False, output_path:
     ]
 
     paths = [os.path.join("output", manifest.infection_report),
-             os.path.join("output", manifest.transmission_report)]
+             os.path.join("output", manifest.transmission_report),
+             os.path.join("output", manifest.insetchart)]
 
     Client.login(manifest.compshost)
 

@@ -24,6 +24,7 @@ download_wi_id_file = os.path.join(output, "download_wi.id")
 simulation_output_filepath = "emod_monthly_testing"
 infection_report = 'ReportInfectionStatsMalaria.csv'
 transmission_report = 'ReportSimpleMalariaTransmission.csv'
+insetchart = "InsetChart.json"
 
 # Comps
 compshost = 'https://comps.idmod.org'
