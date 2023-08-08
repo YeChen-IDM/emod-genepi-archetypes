@@ -39,8 +39,10 @@ def master_sweep_over_toy_scenarios(simulation, value):
     # Non-schema config parameter, so we can find it with dtk_post_process
     simulation.task.config["archetype"] = archetype
 
+    actual_num_importations_per_year_per_thousand = get_actual_number_imports_from_target_number(importations_per_year_per_thousand * population_size_in_thousands)[2] / population_size_in_thousands
+
     return {"archetype": archetype,
             "target_rdt_prevalence": target_rdt_prevalence,
             "population_size_in_thousands": population_size_in_thousands,
             "target_num_importations_per_year_per_thousand": importations_per_year_per_thousand,
-            "actual_num_importations_per_year_per_thousand": get_actual_number_imports_from_target_number(importations_per_year_per_thousand * population_size_in_thousands)[2]}
+            "actual_num_importations_per_year_per_thousand": actual_num_importations_per_year_per_thousand}

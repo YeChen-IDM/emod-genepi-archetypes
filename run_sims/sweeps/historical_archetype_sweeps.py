@@ -55,8 +55,9 @@ def master_sweep_over_historical_scenarios(simulation, value):
     # simulation.task.config["actual_num_importations_per_year_per_thousand"] = get_actual_number_imports_from_target_number(
     #     importations_per_year_per_thousand * population_size_in_thousands)[2]
 
+    actual_num_importations_per_year_per_thousand = get_actual_number_imports_from_target_number(importations_per_year_per_thousand * population_size_in_thousands)[2] / population_size_in_thousands
+
     return {"archetype": archetype,
             "population_size_in_thousands": population_size_in_thousands,
             "importations_per_year_per_thousand": importations_per_year_per_thousand,
-            "actual_num_importations_per_year_per_thousand": get_actual_number_imports_from_target_number(
-                importations_per_year_per_thousand * population_size_in_thousands)[2]}
+            "actual_num_importations_per_year_per_thousand": actual_num_importations_per_year_per_thousand}
