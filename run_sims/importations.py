@@ -58,4 +58,8 @@ def build_importation_only_campaign(num_importations_per_year):
     # Only importations, no other interventions
     campaign = build_standard_campaign_object()
     constant_annual_importation(campaign, total_importations_per_year_target=num_importations_per_year)
+
+    #fixme Have to do this because the reports for the historical campaigns count these events
+    campaign.get_send_trigger("InfectionDropped", old=True)
+    campaign.get_send_trigger("Received_Treatment", old=True)
     return campaign

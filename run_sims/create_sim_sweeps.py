@@ -118,9 +118,16 @@ if __name__ == "__main__":
     #                          max_num_infections=3,
     #                          number_of_seeds=1,
     #                          experiment_name="mpg e2e test")
-    create_and_run_sim_sweep(archetypes=["magude_historical"],
+    # create_and_run_sim_sweep(archetypes=["magude_historical"],
+    #                          pop_sizes_in_thousands=[1,10,50],
+    #                          importations_per_year_per_1000=[50],
+    #                          max_num_infections=3,
+    #                          number_of_seeds=5,
+    #                          experiment_name="mpg e2e test")
+    create_and_run_sim_sweep(archetypes=["flat"],
                              pop_sizes_in_thousands=[1,10,50],
                              importations_per_year_per_1000=[50],
+                             target_prevalences=[0.05],
                              max_num_infections=3,
                              number_of_seeds=5,
                              experiment_name="mpg e2e test")
