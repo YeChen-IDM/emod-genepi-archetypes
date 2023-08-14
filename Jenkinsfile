@@ -49,18 +49,19 @@ podTemplate(
 		}
 		stage('Login to Comps') {
 			withCredentials([string(credentialsId: 'Comps_emodpy_password', variable: 'password')]) {
-					sh 'python3 "run_sims/create_auth_token_args.py" --comps_url https://comps.idmod.org --username yechen --password $password'
+					sh 'python3 "workflow/create_auth_token_args.py" --comps_url https://comps.idmod.org --username yechen --password $password'
 				}
 		}
-		stage('Run Sims') {
-			dir('run_sims') {
+		stage('Get Binary') {
+			dir('get_latest_binary') {
 				sh 'python3 get_latest_binary.py'
-				sh 'python3 run_sim.py'
 			}
 		}
-		stage('Download Outputs and Write Mapping Files') {
-			dir('run_sims') {
-				sh 'python3 post_simulation_steps.py'
+		stage('Run Tests') {
+			dir('test') {
+				sh "pip3 install pytest pytest-xdist pytest-order"
+				sh 'pytest -n 10 --dist loadfile -vv --junitxml="result.xml"'
+				junit '*.xml'
 			}
 		}
  	}
