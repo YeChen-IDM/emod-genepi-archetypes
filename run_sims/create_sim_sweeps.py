@@ -1,4 +1,5 @@
 import itertools
+from typing import List, Optional, Union
 
 from emodpy.emod_task import EMODTask
 from idmtools.builders import SimulationBuilder
@@ -20,15 +21,39 @@ from run_sims.sweeps.toy_archetype_sweeps import master_sweep_over_toy_scenarios
 # test_archetypes = ["test"]
 toy_archetypes = ["test", "flat", "maka_like", "magude_like"]
 historical_archetypes = ["maka_historical", "magude_historical"]
-def create_and_run_sim_sweep(archetypes=["flat"],
-                             pop_sizes_in_thousands=[10], #1,10,20,50,100
-                             importations_per_year_per_1000=[0], # any integer
-                             target_prevalences=None, # 0.05,0.1,0.2,0.3,0.4
-                             max_num_infections=[3], # any integer
-                             number_of_seeds=1,
-                             comps_node_group="idm_abcd",
-                             comps_run_priority="Normal",
-                             experiment_name=None):
+
+
+def create_and_run_sim_sweep(archetypes: Union[List[str], str] = "flat",
+                             pop_sizes_in_thousands: Union[List[int], int] = 10,
+                             importations_per_year_per_1000: Union[List[int], int] = 0,
+                             target_prevalences: Union[List[float], float] = 0.05,
+                             max_num_infections: Union[List[int], int] = 3,
+                             number_of_seeds: int = 1,
+                             comps_node_group: str = "idm_abcd",
+                             comps_run_priority: str = "Normal",
+                             experiment_name: Optional[str] = None,
+                             exp_id_filepath: str = manifest.exp_id_file,
+                             run_exp: bool = True) -> Experiment:
+
+    """
+    Submit and run Emod experiment in Comps
+    Args:
+        archetypes:                      list of values for Archetypes: test, flat, maka_like, magude_like, maka_historical, magude_historical.
+        pop_sizes_in_thousands:          list of values for population size in thousands (possible values are 1k,10k,20k,50k,100k).
+        importations_per_year_per_1000:  list of values for importation rate per 1000 people in population.
+        target_prevalences:              list of values for target (RDT) prevalence for test/flat/maka_like/magude_like scenarios,
+                                         (possible values are 5%, 10%, 20%, 30%, 40%).
+        max_num_infections:              list of values for maximum number of concurrent infections to sweep.
+        number_of_seeds:                 number of simulation replicates.
+        comps_node_group:                comps node_group.
+        comps_run_priority:              comps job priority.
+        experiment_name:                 comps experiment name.
+        exp_id_filepath:                 emod experiment id file path.
+        run_exp:                         For test purpose, set it to False to skip running experiment on Comps.
+
+    Returns: Comps experiment object
+
+    """
     historical_archetype_flag = False
     test_flag = False
 
@@ -100,13 +125,21 @@ def create_and_run_sim_sweep(archetypes=["flat"],
         experiment_name = "mpg e2e test"
     experiment = Experiment.from_builder(builder, task, name=experiment_name)
 
-    experiment.run(wait_until_done=True, platform=platform)
+    if run_exp:
+        experiment.run(wait_until_done=True, platform=platform)
 
-    # Check result
-    if not experiment.succeeded:
-        print(f"Experiment {experiment.uid} failed.\n")
-        exit()
-    print(f"Experiment {experiment.uid} succeeded.")
+        # Check result
+        if not experiment.succeeded:
+            print(f"Experiment {experiment.uid} failed.\n")
+            exit()
+        print(f"Experiment {experiment.uid} succeeded.")
+
+    # Save experiment id to file
+    with open(exp_id_filepath, "w") as fd:
+        print(f"writing to {exp_id_filepath}...")
+        fd.write(str(experiment.uid))
+    print(str(experiment.uid))
+    return experiment
 
 
 if __name__ == "__main__":
@@ -128,6 +161,6 @@ if __name__ == "__main__":
                              pop_sizes_in_thousands=[1,10,50],
                              importations_per_year_per_1000=[50],
                              target_prevalences=[0.05],
-                             max_num_infections=3,
+                             max_num_infections=[3],
                              number_of_seeds=5,
                              experiment_name="mpg e2e test")
