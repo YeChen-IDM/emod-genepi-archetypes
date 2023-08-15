@@ -2,6 +2,7 @@ import unittest
 import os
 import pytest
 import json
+import shutil
 
 from run_sims import manifest
 from run_sims.create_sim_sweeps import create_and_run_sim_sweep
@@ -66,8 +67,9 @@ class TestHistoricalWorkflow(unittest.TestCase):
         for folder, files in folder_structure.items():
             self.assertIn(manifest.infection_report, files.keys())
             self.assertIn(manifest.transmission_report, files.keys())
+            self.assertIn(manifest.insetchart, files.keys())
             image_filenames = [x for x in image_filenames if x not in files.keys()]
-            self.assertEqual(len(files.keys()), 4)
+            self.assertEqual(len(files.keys()), 5)
         self.assertEqual(len(image_filenames), 0)
 
     def mapping_file_test(self, output_file, output_folder, mapping_file_count):

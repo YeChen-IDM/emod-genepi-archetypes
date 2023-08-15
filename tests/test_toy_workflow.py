@@ -68,7 +68,8 @@ class TestToyWorkflow(unittest.TestCase):
         for folder, files in folder_structure.items():
             self.assertIn(manifest.infection_report, files.keys())
             self.assertIn(manifest.transmission_report, files.keys())
-            self.assertEqual(len(files.keys()), 2)
+            self.assertIn(manifest.insetchart, files.keys())
+            self.assertEqual(len(files.keys()), 3)
 
     def mapping_file_test(self, output_file, output_folder, mapping_file_count):
         with open(output_file, 'r') as file:
