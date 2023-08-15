@@ -3,7 +3,7 @@ import argparse
 from run_sims import manifest
 from run_sims.create_sim_sweeps import create_and_run_sim_sweep
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description='Run simulations from command line')
     parser.add_argument('--exp_id_filepath', '-i', type=str,
                         help='emod experiment id file (default to manifest.exp_id_file)',
@@ -20,7 +20,7 @@ if __name__ == "__main__":
                         default=[50])
     parser.add_argument('--target_prevalences', '-t', nargs='+', type=float,
                         help='list of values for target (RDT) prevalence for test/flat/maka_like/magude_like scenarios'
-                             ' (possible values are 5%, 10%, 20%, 30%, 40%, default to [0.05])',
+                             ' (possible values are 5%%, 10%%, 20%%, 30%%, 40%%, default to [0.05])',
                         default=[0.05])
     parser.add_argument('--max_individual_infections', '-m', nargs='+', type=int,
                         help='list of values for maximum number of concurrent infections to sweep '
@@ -47,3 +47,7 @@ if __name__ == "__main__":
                              number_of_seeds=args.seeds,
                              experiment_name=args.exp_name,
                              exp_id_filepath=args.exp_id_filepath)
+
+
+if __name__ == "__main__":
+    main()
