@@ -8,10 +8,13 @@ from run_sims import manifest
 from run_sims.create_sim_sweeps import create_and_run_sim_sweep
 from workflow.download_output_pycomps import download_output
 from workflow.write_mapping_file import write_mapping_file
+from workflow.plot_insetchart import plot_all_insetchart
 
 from helper import build_folder_structure
 
 run_exp = True
+output_file = os.path.join(manifest.output, 'historical_emod_exp.txt')
+output_folder = os.path.join(manifest.output, 'historical_emod_exp')
 
 
 class TestHistoricalWorkflow(unittest.TestCase):
@@ -72,7 +75,7 @@ class TestHistoricalWorkflow(unittest.TestCase):
             self.assertEqual(len(files.keys()), 5)
         self.assertEqual(len(image_filenames), 0)
 
-    def mapping_file_test(self, output_file, output_folder, mapping_file_count):
+    def mapping_file_test(self, mapping_file_count):
         with open(output_file, 'r') as file:
             output_paths = json.load(file)
         mapping_files = write_mapping_file(output_filepath=output_paths)
@@ -84,10 +87,29 @@ class TestHistoricalWorkflow(unittest.TestCase):
 
     @pytest.mark.order(4)
     def test_write_mapping_file_historical(self):
-        output_file = os.path.join(manifest.output, 'historical_emod_exp.txt')
-        output_folder = os.path.join(manifest.output, 'historical_emod_exp')
         mapping_file_count = 2
-        self.mapping_file_test(output_file, output_folder, mapping_file_count)
+        self.mapping_file_test(mapping_file_count)
+
+    @pytest.mark.order(5)
+    def test_plot_insetchart(self):
+        insetchart_files = set()
+        with open(output_file, 'r') as file:
+            output_paths = json.load(file)
+        for my_file in output_paths:
+            emod_folder = os.path.dirname(my_file)
+            insetchart_file = os.path.join(emod_folder, manifest.insetchart)
+            insetchart_files.add(insetchart_file)
+        print(insetchart_files)
+
+        plot_all_insetchart(insetchart_files, all_in_one=False)
+        for insetchart_file in insetchart_files:
+            emod_folder = os.path.dirname(insetchart_file)
+            insetchart_image_file = os.path.join(emod_folder, 'InsetChart.png')
+            self.assertTrue(os.path.exists(insetchart_image_file))
+
+        plot_all_insetchart(insetchart_files, all_in_one=True)
+        self.assertTrue(os.path.exists("InsetChart_all_in_one.png"))
+        shutil.move("InsetChart_all_in_one.png", os.path.join(output_folder, "InsetChart_all_in_one.png"))
 
 
 if __name__ == '__main__':
