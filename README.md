@@ -37,7 +37,7 @@ them at run time for run_sims/run_from_command_line.py
 ```
 Please see Readme in the run_sims folder for details of these parameters.
 
-3(Optional) Run workflow/post_simulation_steps.py. It will run the following steps automatically: 
+3. (Optional) Run workflow/post_simulation_steps.py. It will run the following steps automatically: 
    
     3.1. download_output_pycomps.py: This script will download multiple Emod report files('ReportInfectionStatsMalaria.csv', 'ReportSimpleMalariaTransmission.csv', 'InsetChart.json' and some image files if there are any.) from each simulation to your local machine. It returns the experiment ids with the filepaths of the downloaded files. 
 
