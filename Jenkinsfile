@@ -58,7 +58,7 @@ podTemplate(
 			}
 		}
 		stage('Run Tests') {
-			dir('test') {
+			dir('tests') {
 				sh "pip3 install pytest pytest-xdist pytest-order"
 				sh 'pytest -n 10 --dist loadfile -vv --junitxml="result.xml"'
 				junit '*.xml'
