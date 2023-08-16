@@ -21,7 +21,16 @@ podTemplate(
                              selectedValue: 'NONE',
                              sortMode: 'NONE',
                              tagFilter: '*',
-                             type: 'PT_BRANCH')
+                             type: 'PT_BRANCH'),
+                gitParameter(branch: '',
+                            branchFilter: '.*',
+                            defaultValue: '-1',
+                            name: 'PR',
+                            quickFilterEnabled: false,
+                            selectedValue: 'NONE',
+                            sortMode: 'DESCENDING_SMART',
+                            tagFilter: '*',
+                            type: 'PT_PULL_REQUEST')
         ])])
   node(POD_LABEL) {
     container('dtk-centos-buildenv'){
@@ -38,10 +47,21 @@ podTemplate(
 
 			}
 		stage('Code Checkout') {
-			echo "I execute on the ${env.BRANCH} branch"
-			git branch: "${env.BRANCH}",
-			credentialsId: '704061ca-54ca-4aec-b5ce-ddc7e9eab0f2',
-			url: 'git@github.com:jgsuresh/emod-genepi-archetypes.git'
+			if (params.PR.toString() != '-1') {
+					echo "I execute on the pull request ${params.PR}"
+					checkout([$class: 'GitSCM',
+					branches: [[name: "pr/${params.PR}/head"]],
+					doGenerateSubmoduleConfigurations: false,
+					extensions: [],
+					gitTool: 'Default',
+					submoduleCfg: [],
+					userRemoteConfigs: [[refspec: '+refs/pull/*:refs/remotes/origin/pr/*', credentialsId: '704061ca-54ca-4aec-b5ce-ddc7e9eab0f2', url: 'git@github.com:InstituteforDiseaseModeling/emod-genepi-archetypes.git']]])
+				} else {
+					echo "I execute on the ${env.BRANCH} branch"
+					git branch: "${env.BRANCH}",
+					credentialsId: '704061ca-54ca-4aec-b5ce-ddc7e9eab0f2',
+					url: 'git@github.com:InstituteforDiseaseModeling/emod-genepi-archetypes.git'
+				}
 		}
 		stage('Install') {
 			sh 'pip3 install -e . -r requirements.txt'
@@ -58,7 +78,7 @@ podTemplate(
 			}
 		}
 		stage('Run Tests') {
-			dir('test') {
+			dir('tests') {
 				sh "pip3 install pytest pytest-xdist pytest-order"
 				sh 'pytest -n 10 --dist loadfile -vv --junitxml="result.xml"'
 				junit '*.xml'
