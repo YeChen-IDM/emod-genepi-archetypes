@@ -40,8 +40,9 @@ def write_mapping_file(output_filepath: list, first_only: bool = False, mapping_
                                       index=[0])
             mapping_df.to_csv(sim_map[sim][0], index=False)
             if first_only:
-                print(f'writing to mapping file: {mapping_filepath}.')
+                print(f'We only need first simulation, writing to mapping file: {mapping_filepath}.')
                 mapping_df.to_csv(mapping_filepath, index=False)
+                print("Done writing the mapping file.")
                 break
 
     return list(map(itemgetter(0), list(sim_map.values())))

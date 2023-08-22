@@ -3,7 +3,18 @@ import argparse
 from run_sims import manifest
 from run_sims.create_sim_sweeps import create_and_run_sim_sweep
 
+
+class NullableFloatListAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        if values.lower() == "none":
+            setattr(namespace, self.dest, None)
+        else:
+            float_list = [float(item) for item in values.split(",")]
+            setattr(namespace, self.dest, float_list)
+
+
 def main():
+
     parser = argparse.ArgumentParser(description='Run simulations from command line')
     parser.add_argument('--exp_id_filepath', '-i', type=str,
                         help='emod experiment id file (default to manifest.exp_id_file)',
@@ -18,10 +29,10 @@ def main():
     parser.add_argument('--importations_per_year_per_1000', '-r', nargs='+', type=int,
                         help='list of values for importation rate per 1000 people in population (default to [50])',
                         default=[50])
-    parser.add_argument('--target_prevalences', '-t', nargs='+', type=float,
+    parser.add_argument('--target_prevalences', '-t', type=str,
                         help='list of values for target (RDT) prevalence for test/flat/maka_like/magude_like scenarios'
                              ' (possible values are 5%%, 10%%, 20%%, 30%%, 40%%, default to [0.05])',
-                        default=[0.05])
+                        default=[0.05], action=NullableFloatListAction)
     parser.add_argument('--max_individual_infections', '-m', nargs='+', type=int,
                         help='list of values for maximum number of concurrent infections to sweep '
                              '(default to [3])',
